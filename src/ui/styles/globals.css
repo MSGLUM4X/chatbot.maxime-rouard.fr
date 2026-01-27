@@ -1,4 +1,10 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@custom-variant hover (&:hover); /* For laptop touch screen */
+
 
 :root {
   --background: #ffffff;
@@ -8,9 +14,19 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
+
+@layer utilities {
+  @keyframes shimmer {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(200%);
+    }
+  }
+}
+
 
 @media (prefers-color-scheme: dark) {
   :root {

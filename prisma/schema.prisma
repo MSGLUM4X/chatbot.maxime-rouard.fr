@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id    String  @id @default(uuid())
+  email String  @unique
+  talks Talk[]
+  createdAt DateTime @default(now())
+
+}
+
+model Talk {
+  @@unique([id, userId])
+  id    String     @id @default(uuid())
+  userId String
+  title String
+  messages Message[]
+  llmModel  LLMModel  @relation(fields: [llmModelId], references: [id])
+  llmModelId String @unique
+  user User @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt @default(now())
+
+
+}
+
+model Message {
+  id String     @id @default(uuid())
+  content String
+  role Role
+  talk Talk @relation(fields: [talkId], references: [id],onDelete: Cascade)
+  talkId String
+  createdAt DateTime @default(now())
+  @@index([talkId, createdAt])
+}
+
+model LLMModel {
+  id String @id @default(uuid())
+  model String @default("mistral-small-2503")
+  temperature Float?
+  talk        Talk?
+  updatedAt DateTime  @updatedAt @default(now())
+}
+
+enum Role {
+  system
+  user
+  assistant
+}

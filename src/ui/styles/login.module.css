@@ -1,0 +1,103 @@
+.backgroundRoot{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+    color: #ffffff;
+    height: 100vh;
+    width: 100vw;
+}
+
+.title {
+    background: linear-gradient(135deg, #ff7000 0%, #ff9d4d 100%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    font-size: 48px;
+    font-weight: 700;
+    animation: slideDown 0.8s ease-out;
+    text-align: center;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mistralLogo {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(35, 1fr);
+    grid-template-rows: repeat(35, 1fr);
+    gap: 2px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+
+
+.pixel1 { grid-column: 6 / 11; grid-row: 6/11; background: #FFD700; animation: blockPulse 3s ease-in-out infinite; animation-delay: 0s; }
+.pixel2 { grid-column: 26 / 31; grid-row: 6/11; background: #FFD700; animation: blockPulse 3s ease-in-out infinite; animation-delay: 0.1s; }
+
+
+.pixel3 { grid-column: 6 / 16; grid-row: 11/16; background: #FFA500; animation: blockPulse 3s ease-in-out infinite; animation-delay: 0.2s; }
+.pixel4 { grid-column: 21 / 31; grid-row: 11/16; background: #FFA500; animation: blockPulse 3s ease-in-out infinite; animation-delay: 0.3s; }
+
+.pixel5 { grid-column: 6 / 31; grid-row: 16/21; background: #FF8C00; animation: blockPulse 3s ease-in-out infinite; animation-delay: 0.4s; }
+
+.pixel6 { grid-column: 6 / 11; grid-row: 21/26; background: #FF5722; animation: blockPulse 3s ease-in-out infinite; animation-delay: 0.5s; }
+
+.pixel7 { grid-column: 16 / 21 ; grid-row: 21/26; background: #FF5722; animation: blockPulse 3s ease-in-out infinite; animation-delay: 0.6s; }
+.pixel8 { grid-column: 26 / 31; grid-row: 21/26; background: #FF5722; animation: blockPulse 3s ease-in-out infinite; animation-delay: 0.6s; }
+
+.pixel9 { grid-column: 1 / 16; grid-row: 26/31; background: #E60000; animation: blockPulse 3s ease-in-out infinite; animation-delay: 0.7s; }
+.pixel10 { grid-column: 21 / 36; grid-row: 26/31; background: #E60000; animation: blockPulse 3s ease-in-out infinite; animation-delay: 0.8s; }
+
+@keyframes blockPulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(1.02);
+        opacity: 0.95;
+        filter: brightness(1.2);
+    }
+}
+
+.loginButton {
+    transition: transform 0.3s ease;
+}
+
+.loginButton:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
