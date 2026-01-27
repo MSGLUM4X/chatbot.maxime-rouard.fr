@@ -41,5 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 /certificates
-/src/app/generated/prisma
+/src/generated/prisma
 /prisma/migrations
+.idea
