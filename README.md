@@ -1,4 +1,4 @@
-# Chatbot — Built from scratch with Mistral API
+# Mistral AI Chatbot - Deployment
 
 A full-stack chatbot built with Next.js and the Mistral API.
 This README explains how to run it locally and how to deploy it to production.
