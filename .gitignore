@@ -40,9 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/certificates
 /src/generated/prisma
 /prisma/migrations
-/src/save
 .idea
-/src/app/(debug)
