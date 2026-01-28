@@ -55,7 +55,7 @@ const ErrorPage = async (props: {
                     Something went wrong
                 </h5>
                 <div className="font-normal text-gray-700">
-                    {errorMap[error] || "Please contact us if this error persists."}
+                    { "Please contact us if this error persists."}
                 </div>
             </div>
         </div>
