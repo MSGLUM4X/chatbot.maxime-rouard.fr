@@ -1,11 +1,11 @@
 "use client"
 
-
 import { useActionState } from 'react';
 import { useSearchParams } from "next/navigation"
 import Link from "next/link";
 import Image from "next/image";
 import {sendContactMail, State} from "@/lib/contactAction";
+import Form from "next/form";
 
 
 enum Error {
@@ -90,7 +90,7 @@ export default function AuthErrorPage() {
                         Ask for access
                     </h5>
                     <div className="font-normal text-gray-700 dark:text-gray-400">
-                        <form action={formAction}>
+                        <Form action={formAction}>
                             <div className="flex flex-row gap-2">
                                 <div className="flex-1 flex flex-col gap-3">
                                     <input className="border border-gray-700 rounded-lg p-2" type="email" name="email" placeholder="Votre email"></input>
@@ -103,7 +103,7 @@ export default function AuthErrorPage() {
                                     <Image src="/icons/send-svgrepo-com.svg" width={20} height={20} alt="Ask for access"/>
                                 </button>
                             </div>
-                        </form>
+                        </Form>
                     </div>
                     {state.success === false && <p className="mt-2 font-normal text-gray-700 dark:text-gray-400">{state.error}</p>}
                 </div>
