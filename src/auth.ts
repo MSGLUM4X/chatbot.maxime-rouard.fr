@@ -70,14 +70,14 @@ export const { auth, handlers, signIn, signOut  } = NextAuth({
             const callbackUrl = nextUrl.searchParams.get('callbackUrl') || '/';
             const isLoggedIn = !!auth?.user;
             const isOnChatbot = nextUrl.pathname.startsWith('/chatbot');
-            const isOnLogin = nextUrl.pathname.endsWith('/login')
+            const isOnAuth = nextUrl.pathname.startsWith('/auth')
             const isOnMenu = nextUrl.pathname === '/'
 
             if (isOnChatbot) {
                 if (isLoggedIn) return true;
                 return false;
             }
-            if (isOnLogin){
+            if (isOnAuth){
                 if (isLoggedIn) return Response.redirect(new URL(callbackUrl, nextUrl));
                 return true;
             }
