@@ -13,19 +13,18 @@ export function SignIn(props:{callbackUrl:string, provider:string, srcImage:stri
     );
 
     return (
-        <>
-            <form action={formAction}>
-                <input type="hidden" name="provider" value={props.provider} />
-                <input type="hidden" name="callbackUrl" value={props.callbackUrl} />
-                <button
-                    type="submit"
-                    className="bg-gray-50 cursor-pointer p-6 rounded-lg border flex felx-row"
-                >
-                    <Image width={20} height={20} src={props.srcImage}  alt={`Sign in with ${props.provider}`}/>
-                    <p className="ml-2"> Sign In </p>
-                </button>
-            </form>
-        </>
+
+        <form className="w-full h-full border border-gray-200 cursor-pointer rounded-lg shadow-lg hover:scale-105 hover:shadow-2xl transition-all duration-300" action={formAction}>
+            <input type="hidden" name="provider" value={props.provider} />
+            <input type="hidden" name="callbackUrl" value={props.callbackUrl} />
+            <button
+                type="submit"
+                className="cursor-pointer w-full h-full flex flex-row justify-center gap-10 items-center"
+            >
+                <Image width={30} height={30} src={props.srcImage}  alt={`Sign in with ${props.provider}`}/>
+                <p className="transition-all duration-600 font-bold font-mono text-sm"> {`Sign in with ${props.provider}`}</p>
+            </button>
+        </form>
 
 
     )
