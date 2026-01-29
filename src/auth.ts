@@ -1,8 +1,14 @@
-import NextAuth, {Profile} from "next-auth"
+import NextAuth from "next-auth"
 import GitHub from "next-auth/providers/github"
 import Google from "next-auth/providers/google"
 import prisma from '@/lib/prisma'
+import {DefaultUser} from "@auth/core/types";
 
+declare module "next-auth" {
+    interface User extends DefaultUser {
+        email_verified?: boolean;
+    }
+}
 
 const ALLOW_EMAIL = JSON.parse(process.env.ALLOW_EMAIL ?? "[]") as string[];
 const ALLOW_DOMAINS = JSON.parse(process.env.ALLOW_DOMAINS ?? "[]") as string[];
@@ -15,40 +21,12 @@ const allowDomains = (email:string) => {
     return ALLOW_DOMAINS.includes(domain);
 }
 
-const validEmail = (email:string|null|undefined, verified:boolean|null|undefined) => {
-    if (!email || !verified){
-        return false;
-    }
-    return allowDomains(email)
-}
-
-
-const handleGithubSignIn = (profile : Profile)=> {
-    const email = profile.email;
-    const verified = profile.email_verified;
-    const verified2 = profile.verified
-    console.log(email,verified, verified2)
-    return true;
-    return validEmail(email,verified)
-}
-const handleGoogleSignIn = (profile : Profile)=> {
-    const email = profile.email;
-    const emailVerified = profile.email_verified
-    if (!email || !emailVerified){
-        return false;
-    }
-    return allowDomains(email)
-}
-
-
 export const { auth, handlers, signIn, signOut  } = NextAuth({
     pages: {
         signIn: '/auth/login',
         error: '/auth/error',
     },
     providers: [GitHub({
-        clientId: process.env.GITHUB_CLIENT_ID!,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET!,
         authorization: {
             params: {
                 prompt: "select_account",
@@ -70,23 +48,26 @@ export const { auth, handlers, signIn, signOut  } = NextAuth({
             }[] = await res.json();
 
             const verifiedAllowedEmail = emails.find(e => e.verified && allowDomains(e.email));
-
-            if (!verifiedAllowedEmail) {
-                throw new Error("EMAIL_DOMAIN_NOT_ALLOWED");
-            }
-            const email : string =  verifiedAllowedEmail.email
-
+            const email : string =  verifiedAllowedEmail?.email || '';
+            const email_verified : boolean = (verifiedAllowedEmail!=undefined);
             return {
                 id: profile.id.toString(),
                 name: profile.name ?? profile.login,
                 email: email,
-                email_verified: new Date(),
+                email_verified: email_verified,
                 image: profile.avatar_url,
             };
         },
-    }), Google],
+    }), Google({
+        authorization: {
+            params: {
+                prompt: "select_account",
+            },
+        }})
+    ],
     callbacks: {
         authorized({ auth, request: { nextUrl } }){
+            const callbackUrl = nextUrl.searchParams.get('callbackUrl') || '/';
             const isLoggedIn = !!auth?.user;
             const isOnChatbot = nextUrl.pathname.startsWith('/chatbot');
             const isOnLogin = nextUrl.pathname.endsWith('/login')
@@ -97,7 +78,7 @@ export const { auth, handlers, signIn, signOut  } = NextAuth({
                 return false;
             }
             if (isOnLogin){
-                if (isLoggedIn) return Response.redirect(new URL('/', nextUrl));
+                if (isLoggedIn) return Response.redirect(new URL(callbackUrl, nextUrl));
                 return true;
             }
             if (isOnMenu){
@@ -106,9 +87,24 @@ export const { auth, handlers, signIn, signOut  } = NextAuth({
             return false;
         },
         async signIn({account, profile, user}) {
+
             if (!account || !profile || !profile.email) {
                 return false;
             }
+
+            switch (account.provider) {
+                case "github":
+                    if (!user.email_verified) return false;
+                    break;
+                case "google":
+                    if (!profile.email_verified) return false;
+                    break;
+                default:
+                    return false;
+            }
+
+            if (!allowDomains(profile.email)) return false;
+
             let dbUser = await prisma.user.findUnique({
                 where:{
                     email:profile.email
@@ -124,16 +120,7 @@ export const { auth, handlers, signIn, signOut  } = NextAuth({
             }
             user.id = dbUser.id.toString();
             return true;
-            /*
-            switch (account.provider) {
-                case "github":
-                    return true;
-                case "google":
-                    return handleGoogleSignIn(profile);
-                default:
-                    return false;
-            }
-             */
+
 
         },
         jwt({ token, user }) {

@@ -1,12 +1,12 @@
 import styles from "@/ui/styles/logo-mistral.module.css";
 import Link from "next/link";
 
-const MistralButton = () => {
+const MistralButton = (props:{callBackUrl:string}) => {
 
     return (
         <Link
             className={`h-[70px] cursor-pointer shadow-2xl rounded-2xl flex flex-row items-center justify-start group transition-all duration-300 ease-out hover:-translate-y-1 hover:scale-105 hover:shadow-xl bg-[linear-gradient(135deg,_rgba(10,_10,_10,_0.56)_0%,_#1a1a2e_100%)] dark:bg-white`}
-            href="/auth/login"
+            href={`/auth/login?${props.callBackUrl}`}
         >
             <div className={`ml-5 transition-all duration-300 group-hover:rotate-360  ${styles.mistralLogo}`}>
                 <div className={styles.pixel1}></div>
