@@ -3,6 +3,8 @@
 A full-stack chatbot built with Next.js and the Mistral API.
 This README explains how to run it locally and how to deploy it to production.
 
+> Link to this project in prod : [https://chatbot.maxime-rouard.fr](https://chatbot.maxime-rouard.fr)
+
 > Check out my other projects at : [My projects](https://maxime-rouard.fr/creations)
 
 ---
