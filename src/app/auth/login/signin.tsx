@@ -19,10 +19,10 @@ export function SignIn(props:{callbackUrl:string, provider:string, srcImage:stri
             <input type="hidden" name="callbackUrl" value={props.callbackUrl} />
             <button
                 type="submit"
-                className="w-full h-full flex flex-row justify-center items-center"
+                className="cursor-pointer w-full h-full flex flex-row justify-center gap-10 items-center"
             >
-                <Image width={20} height={20} src={props.srcImage}  alt={`Sign in with ${props.provider}`}/>
-                <p className="ml-2"> Sign In </p>
+                <Image width={30} height={30} src={props.srcImage}  alt={`Sign in with ${props.provider}`}/>
+                <p className="transition-all duration-600 font-bold font-mono text-sm"> {`Sign in with ${props.provider}`}</p>
             </button>
         </form>
 
