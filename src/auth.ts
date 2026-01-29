@@ -89,19 +89,21 @@ export const { auth, handlers, signIn, signOut  } = NextAuth({
         authorized({ auth, request: { nextUrl } }){
             const isLoggedIn = !!auth?.user;
             const isOnChatbot = nextUrl.pathname.startsWith('/chatbot');
-            const isOnDev = nextUrl.pathname.startsWith('/dev');
-            //TODO access admin
-            const isDev = true;
-            if (isOnDev && isDev){
-                return true;
-            }
+            const isOnLogin = nextUrl.pathname.endsWith('/login')
+            const isOnMenu = nextUrl.pathname === '/'
+
             if (isOnChatbot) {
                 if (isLoggedIn) return true;
                 return false;
-            } else if (isLoggedIn) {
-                return Response.redirect(new URL('/chatbot', nextUrl));
             }
-            return true;
+            if (isOnLogin){
+                if (isLoggedIn) return Response.redirect(new URL('/', nextUrl));
+                return true;
+            }
+            if (isOnMenu){
+                return true;
+            }
+            return false;
         },
         async signIn({account, profile, user}) {
             if (!account || !profile || !profile.email) {
