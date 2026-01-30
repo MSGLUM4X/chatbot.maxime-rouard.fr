@@ -8,44 +8,43 @@ datasource db {
 }
 
 model User {
-  id    String  @id @default(uuid())
-  email String  @unique
-  talks Talk[]
+  id        String   @id @default(uuid())
+  email     String   @unique
   createdAt DateTime @default(now())
-
+  talks     Talk[]
 }
 
 model Talk {
-  @@unique([id, userId])
-  id    String     @id @default(uuid())
-  userId String
-  title String
-  messages Message[]
-  llmModel  LLMModel  @relation(fields: [llmModelId], references: [id])
-  llmModelId String @unique
-  user User @relation(fields: [userId], references: [id])
+  id        String    @id @default(uuid())
+  title     String
+  userId    String
   createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  llmModel  LLMModel?
+  messages  Message[]
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-
+  @@unique([id, userId])
 }
 
 model Message {
-  id String     @id @default(uuid())
-  content String
-  role Role
-  talk Talk @relation(fields: [talkId], references: [id],onDelete: Cascade)
-  talkId String
+  id        String   @id @default(uuid())
+  content   String
+  role      Role
+  talkId    String
   createdAt DateTime @default(now())
+  talk      Talk     @relation(fields: [talkId], references: [id], onDelete: Cascade)
+
   @@index([talkId, createdAt])
 }
 
 model LLMModel {
-  id String @id @default(uuid())
-  model String @default("mistral-small-2503")
-  temperature Float?
-  talk        Talk?
-  updatedAt DateTime  @updatedAt @default(now())
+  id          String   @id @default(uuid())
+  model       String   @default("mistral-small-2503")
+  temperature Float?   @default(0.7)
+  updatedAt   DateTime @updatedAt
+  talkId      String   @unique
+  talk        Talk     @relation(fields: [talkId], references: [id], onDelete: Cascade)
 }
 
 enum Role {

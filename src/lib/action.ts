@@ -76,7 +76,8 @@ export const sendFirstPromptAction = withAuthAction((async (userId , prevState:S
 
     const data = validateFields.data
     const talkId = await createNewTalk(userId,data.title);
-    if(!talkId){
+    if(!talkId.data){
+        console.log(talkId.error)
         return {success:false,}
     }
     revalidateTag('talk-resume', 'max')
