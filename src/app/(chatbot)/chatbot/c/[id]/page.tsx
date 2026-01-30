@@ -15,7 +15,7 @@ const ChatPage =  async ({params}:{ params: Promise<{ id: string }> }) => {
                 </Suspense>
                 <div className="w-full h-full flex flex-col items-center">
                     <TopBar/>
-                    <div className="flex-1 w-full overflow-y-auto bg-gray-200">
+                    <div className="flex-1 w-full overflow-y-auto bg-gray-200 dark:from-slate-900 dark:bg-gradient-to-t dark:bg-slate-600 dark:bg-slate-700">
                         <MessagesContentClient>
                             <Suspense>
                                 <MessagesContentServer talkId={params}/>

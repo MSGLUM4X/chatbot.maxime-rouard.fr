@@ -4,6 +4,7 @@
 @tailwind utilities;
 
 @custom-variant hover (&:hover); /* For laptop touch screen */
+@custom-variant dark (&:where(.dark, .dark *));
 
 
 :root {
@@ -25,11 +26,25 @@
       transform: translateX(200%);
     }
   }
+
+  .dark\:text-slate-light {
+    color: var(--color-slate-light);
+  }
+
+  .bg-slate-light {
+    background-color: var(--color-slate-light);
+  }
+
+  .dark\:to-slate-light {
+   --tw-gradient-to:  var(--color-slate-light);
+  }
+
 }
 
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --color-slate-light: #b6b9ca;
     --background: #0a0a0a;
     --foreground: #ededed;
   }
@@ -40,3 +55,13 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+html.dark h1{
+    color: var(--color-slate-950);
+}
+html.dark textarea{
+  color: var(--color-slate-700);
+  background-color: var(--color-slate-200);
+}
+
+

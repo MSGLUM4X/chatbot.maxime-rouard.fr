@@ -37,7 +37,7 @@ const PromptBar = () => {
     };
 
     return (
-        <div className="w-4/5 max-w-4xl bg-gray-100 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 ">
+        <div className="w-4/5 max-w-4xl bg-gray-100 dark:bg-slate-200 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 ">
             <div className="mt-2 mb-2 mx-auto p-3">
                 <div className="flex items-end gap-2 ">
 

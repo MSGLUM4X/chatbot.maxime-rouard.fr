@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "@/ui/styles/globals.css";
+import DarkModeInit from "@/app/root-components/dark-mode-init";
 
 
 
@@ -16,6 +17,7 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body className="h-screen w-screen">
+            <DarkModeInit />
             {children}
         </body>
         </html>
