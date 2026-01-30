@@ -2,7 +2,6 @@ import {fetchTalksList} from "@/lib/data";
 import ConversationNav from "@/app/(chatbot)/components-layout/side-nav/conversation-nav";
 import { cacheTag } from 'next/cache'
 import {Session} from "@auth/core/types";
-import ConversationNavServer from "@/app/(chatbot)/components-layout/side-nav/conversation-nav-server";
 
 
 
@@ -34,9 +33,7 @@ const ConversationsList = async (props:{session:Session}) => {
     return (
         <>
             {data.talks.map((conv,key) => (
-                <ConversationNav key= {key} id={conv.id} title={conv.title}>
-                    <ConversationNavServer talkId={conv.id}/>
-                </ConversationNav>
+                <ConversationNav key= {key} id={conv.id} title={conv.title} talkId={conv.id} />
             ))}
         </>
     )
