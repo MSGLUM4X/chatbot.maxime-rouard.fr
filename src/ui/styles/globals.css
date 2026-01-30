@@ -57,7 +57,7 @@ body {
 }
 
 html.dark h1{
-    color: var(--color-slate-950);
+    color: var(--color-slate-400);
 }
 html.dark textarea{
   color: var(--color-slate-700);

@@ -14,12 +14,14 @@ export const chatCompletion = async (context:fetchMessage,model:string) => {
             messages: context
         })
     });
-    /*
-    const resJson = await res.json();
-    if (!res.ok) {
-        throw new Error(resJson.message);
-    }
-    return resJson.choices.message;
+}
 
-     */
+export const getModels = async () => {
+    return await fetch("https://api.mistral.ai/v1/models", {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${process.env.API_KEY_MISTRAL}`,
+            "Content-Type": "application/json"
+        },
+    });
 }

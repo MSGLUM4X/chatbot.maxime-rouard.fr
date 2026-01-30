@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { revalidateTag } from 'next/cache'
-import {addMessage, createNewTalk, deleteTalkDb, fetchChatCompletion, fetchMessage} from "@/lib/data";
+import {addMessage, createNewTalk, deleteTalkDb, fetchChatCompletion, fetchGetModels, fetchMessage} from "@/lib/data";
 import {auth} from "@/auth";
 import {FetchError} from "@/lib/error";
 import {z} from "zod";
@@ -25,6 +25,7 @@ const SendFirstPromptSchema = z.object({
     prompt: z.string().trim().min(1, {
         message: "A prompt is required"
     }),
+    model: z.string(),
     title: z.preprocess(
         val => (val === "" ? undefined : val),
         z.string().default("Nouvelle discussion")
@@ -68,6 +69,7 @@ export const sendFirstPromptAction = withAuthAction((async (userId , prevState:S
     const validateFields = SendFirstPromptSchema.safeParse({
         prompt:formData.get("prompt"),
         title:formData.get("title"),
+        model:formData.get("model"),
     })
 
     if(!validateFields.success){
@@ -75,7 +77,7 @@ export const sendFirstPromptAction = withAuthAction((async (userId , prevState:S
     }
 
     const data = validateFields.data
-    const talkId = await createNewTalk(userId,data.title);
+    const talkId = await createNewTalk(userId,data.title, data.model);
     if(!talkId.data){
         console.log(talkId.error)
         return {success:false,}
@@ -131,4 +133,10 @@ const sendPromptFn = async (context:fetchMessage,talkId:string, userId:string) =
     }
     revalidatePath(`/chatbot/c/${talkId}`);
     return {success:true};
+}
+
+
+export const getModelsAction = async () => {
+    const res = await fetchGetModels();
+    return res
 }

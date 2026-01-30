@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma'
 import type { Role } from '@/generated/prisma/enums';
 import {FetchError} from "@/lib/error";
-import {chatCompletion} from "@/lib/mistral";
+import {chatCompletion, getModels} from "@/lib/mistral";
 import { marked } from "marked";
 
 
@@ -46,7 +46,7 @@ export type fetchMessage = SelectMessageType[]
 
 
 
-export const createNewTalk = async (userId:string,title:string): Promise<{error?:any, data?:any}> => {
+export const createNewTalk = async (userId:string,title:string,model:string): Promise<{error?:any, data?:any}> => {
     try {
         const userTalk = await  prisma.talk.create({
             data: {
@@ -58,6 +58,7 @@ export const createNewTalk = async (userId:string,title:string): Promise<{error?
                 },
                 llmModel:{
                     create:{
+                        model:model,
                         temperature:1,
                     },
                 }
@@ -174,6 +175,16 @@ export const fetchChatCompletion = async (context:fetchMessage,model:string) => 
     //TODO SANITIZE
     const dataSanitize = await marked.parse(data.choices[0].message.content);
     return {data: dataSanitize}
+
+}
+
+export const fetchGetModels = async () => {
+    const res = await getModels();
+    if (!res.ok){
+        return {error:FetchError.FailedAnswer};
+    }
+    const data = await res.json();
+    return {data: data}
 
 }
 
