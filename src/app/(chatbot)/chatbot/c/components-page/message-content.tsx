@@ -9,8 +9,7 @@ const MessageContent = (props:{role:Role,content:string}) => {
                 'bg-white': props.role === "assistant",
             })}>
             <div className="flex flex-end p-2 text-justify">
-                {/* <div dangerouslySetInnerHTML={{ __html: props.content }}/> */}
-                <p>{props.content.toString()}</p>
+                <div className="text-wrap wrap-anywhere" dangerouslySetInnerHTML={{ __html: props.content }}/>
             </div>
         </article>
     )
