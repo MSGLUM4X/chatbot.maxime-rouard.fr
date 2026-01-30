@@ -46,7 +46,7 @@ export type fetchMessage = SelectMessageType[]
 
 
 
-export const createNewTalk = async (userId:string,title:string): Promise<{error?:string, data?:any}> => {
+export const createNewTalk = async (userId:string,title:string): Promise<{error?:any, data?:any}> => {
     try {
         const userTalk = await  prisma.talk.create({
             data: {
@@ -59,7 +59,7 @@ export const createNewTalk = async (userId:string,title:string): Promise<{error?
                 llmModel:{
                     create:{
                         temperature:1,
-                    }
+                    },
                 }
             },
             select:{
@@ -71,7 +71,7 @@ export const createNewTalk = async (userId:string,title:string): Promise<{error?
         }
     } catch (err){
         return {
-            error: "error"
+            error: err
         }
     }
 }
