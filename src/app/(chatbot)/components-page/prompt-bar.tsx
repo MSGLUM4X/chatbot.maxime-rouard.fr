@@ -44,6 +44,7 @@ const PromptBar = () => {
                     <button
                         className="max-md:hidden p-3 border-gray-400 rounded-lg border bg-gray-200 text-white"
                         title="Paramètres du modèles"
+                        type="button"
                     >
                         <Image src="/icons/options-svgrepo-com.svg" alt="Send" width={24} height={24}/>
                     </button>
@@ -52,6 +53,7 @@ const PromptBar = () => {
                     <button
                         className="max-md:hidden p-3 border-gray-400 border rounded-lg bg-gray-200 text-white"
                         title="Joindre un fichier"
+                        type="button"
                     >
                         <Image src="/icons/folder-add-svgrepo-com.svg" alt="Send" width={24} height={24}/>
                     </button>
@@ -73,6 +75,7 @@ const PromptBar = () => {
 
                     <button
                         className="max-md:hidden p-3 border-gray-400 border rounded-lg bg-gray-200 text-white"
+                        type="button"
                     >
                         <Image src="/icons/microphone-svgrepo-com.svg" alt="Send" width={24} height={24}/>
                     </button>
