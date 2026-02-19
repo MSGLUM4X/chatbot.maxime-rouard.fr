@@ -28,7 +28,7 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div className="flex-1 w-full flex items-center justify-center">
-                    <div className="bg-white/10 flex-1 w-3/5 h-1/2 sm:h-3/4 sm:w-full max-w-sm backdrop-blur-sm shadow-2xl rounded-full sm:rounded-2xl mb-10 flex flex-col justify-evenly items-center hover:shadow-sm transition-all duration-500">
+                    <div className="bg-white/10 flex-1 w-3/5 h-1/2 sm:h-3/4 sm:w-full max-w-sm backdrop-blur-sm shadow-2xl rounded-2xl mb-10 flex flex-col justify-evenly items-center hover:shadow-sm transition-all duration-500">
                         <div className="flex flex-col gap-20 max-w-xs w-3/5">
                             <MistralButton callBackUrl={"callbackUrl=/chatbot"}/>
                             <ServiceButton/>
